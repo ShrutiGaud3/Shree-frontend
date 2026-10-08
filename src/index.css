@@ -1,36 +1,171 @@
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Outfit:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;0,900;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
-/* Shree brand palette — single source of truth for the frontend.
-   Components must use these variables / theme tokens, never raw hex. */
+/* Shree luxury boutique design system (Lumière inspired light theme) */
 :root {
-  --color-primary: #ffafcc; /* bubblegum pink: main buttons, highlights */
-  --color-primary-soft: #ffc8dd; /* light pink: hovers, badges, section bg */
-  --color-bg: #fef8e1; /* cream: page background */
-  --color-surface: #faebcc; /* sand: cards, navbar, footer, input fill */
-  --color-accent: #d0a375; /* tan/caramel: borders, decoration, large text */
-  --color-text: #4a3426; /* dark brown: ALL body text and headings */
-  --color-text-muted: #8a7261; /* muted brown: secondary text (large only) */
+  --color-primary: #FFAFCC;          /* Soft bubblegum pink */
+  --color-primary-hover: #FF94B8;    /* Richer hover pink */
+  --color-primary-soft: #FFE5EE;     /* Ultra soft blush pink */
+  --color-primary-tint: #FFF0F5;     /* Very pale blush for jewellery cards */
+  --color-bg: #FCFBF7;               /* Off-white warm luxury canvas */
+  --color-surface: #FDF9F0;          /* Warm soft cream for navbar & cards */
+  --color-surface-card: #FFFFFF;     /* Crisp clean white for product cards */
+  --color-sand-tint: #FEF6E4;        /* Soft warm cream for toys cards */
+  --color-accent: #D0A375;           /* Tan & soft gold */
+  --color-accent-light: #F3E5D4;     /* Pale tan */
+  --color-text: #362217;             /* Deep espresso luxury brown */
+  --color-text-muted: #7A6557;       /* Refined medium muted brown */
+  --color-border: #EFE7D8;           /* Subtle warm border */
+  --color-success: #D4EDDA;
+  --color-success-text: #22543D;
+  --color-error: #F8D7DA;
+  --color-error-text: #742A2A;
+  --color-warning: #FFF3CD;
+  --color-warning-text: #744210;
 }
 
 @theme {
-  --color-primary: #ffafcc;
-  --color-primary-soft: #ffc8dd;
-  --color-bg: #fef8e1;
-  --color-surface: #faebcc;
-  --color-accent: #d0a375;
-  --color-text: #4a3426;
-  --color-text-muted: #8a7261;
-  --font-display: "Baloo 2", ui-rounded, system-ui, sans-serif;
-  --font-body: "Nunito", ui-rounded, system-ui, sans-serif;
+  --color-primary: #FFAFCC;
+  --color-primary-hover: #FF94B8;
+  --color-primary-soft: #FFE5EE;
+  --color-primary-tint: #FFF0F5;
+  --color-bg: #FCFBF7;
+  --color-surface: #FDF9F0;
+  --color-surface-card: #FFFFFF;
+  --color-sand-tint: #FEF6E4;
+  --color-accent: #D0A375;
+  --color-accent-light: #F3E5D4;
+  --color-text: #362217;
+  --color-text-muted: #7A6557;
+  --color-border: #EFE7D8;
+  --color-success: #D4EDDA;
+  --color-success-text: #22543D;
+  --color-error: #F8D7DA;
+  --color-error-text: #742A2A;
+  --color-warning: #FFF3CD;
+  --color-warning-text: #744210;
+
+  --font-serif: "Playfair Display", "Cormorant Garamond", Georgia, serif;
+  --font-display: "Outfit", "Playfair Display", sans-serif;
+  --font-body: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Global Base Styles */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 body {
   background-color: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-body);
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  position: relative;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, .font-display {
+#root {
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Typography styles */
+h1, h2, h3, h4, .font-serif {
+  font-family: var(--font-serif);
+  letter-spacing: -0.01em;
+}
+
+.font-display {
   font-family: var(--font-display);
+}
+
+/* Custom smooth scrollbar for document */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-accent);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+/* Hide scrollbar utility for touch/swipe carousels */
+.scrollbar-none,
+[class*="scrollbar-none"],
+.no-scrollbar {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+}
+
+.scrollbar-none::-webkit-scrollbar,
+[class*="scrollbar-none"]::-webkit-scrollbar,
+.no-scrollbar::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* Shimmer animation for skeleton loaders */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(253, 249, 240, 0.6) 0%,
+    rgba(255, 255, 255, 0.9) 50%,
+    rgba(253, 249, 240, 0.6) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s infinite ease-in-out;
+}
+
+/* Float subtle animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

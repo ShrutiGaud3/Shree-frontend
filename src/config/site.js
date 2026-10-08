@@ -1,8 +1,8 @@
 // Frontend single source of truth for store identity + catalog taxonomy.
 // Backend mirror: server/config/storeConfig.js + server/config/categories.js
 
-export const STORE_NAME = "Shree";
-export const STORE_TITLE = "Shree | Toys & Jewellery";
+export const STORE_NAME = "Shree 14";
+export const STORE_TITLE = "Shree 14 | Toys & Jewellery";
 export const STORE_TAGLINE = "Toys that spark joy, jewellery that shines.";
 
 export const API_BASE = "/api"; // vite proxies /api -> backend (see vite.config.js)
