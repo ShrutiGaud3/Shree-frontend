@@ -641,12 +641,12 @@ const Footer = () => (
       </FooterSection>
     </div>
 
-    {/* Bottom bar */}
-    <div className="border-t border-border/60 py-4 px-4 text-center space-y-1">
+    {/* Bottom bar with safe padding above fixed mobile bottom nav */}
+    <div className="border-t border-border/60 pt-4 pb-24 md:pb-4 px-4 text-center space-y-1.5">
       <p className="text-[11px] font-semibold text-text-muted">
         Secure payments via Razorpay & COD · GST invoice with every order
       </p>
-      <p className="text-[11px] text-text-muted">
+      <p className="text-[11px] font-medium text-text-muted">
         © {new Date().getFullYear()} {STORE_NAME}. All rights reserved.
       </p>
     </div>
