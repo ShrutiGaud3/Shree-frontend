@@ -2,7 +2,11 @@ const BAR_COLORS = ["#EC5E95", "#D0A375", "#F9A8C4", "#8A7261", "#FFAFCC"];
 
 // Hand-rolled SVG charts (no new deps) in the app's pink/cream tokens.
 export const SalesChart = ({ series = [] }) => {
-  const max = Math.max(1, ...series.map((d) => d.revenue));
+  if (!series || series.length === 0) {
+    return <p className="py-8 text-center text-xs font-semibold text-text-muted">No sales recorded in this period yet.</p>;
+  }
+
+  const max = Math.max(1, ...series.map((d) => Number(d.revenue || 0)));
   const W = 640;
   const H = 180;
   const PAD = 8;

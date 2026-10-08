@@ -96,36 +96,36 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 w-full max-w-full min-w-0">
         <KpiCard
           title="Today's Orders"
-          value={data.today.orders}
+          value={data?.today?.orders || 0}
           icon={ShoppingBag}
         />
         <KpiCard
           title="Today's Revenue"
-          value={`₹${Number(data.today.revenue).toLocaleString("en-IN")}`}
+          value={`₹${Number(data?.today?.revenue || 0).toLocaleString("en-IN")}`}
           icon={TrendingUp}
         />
         <KpiCard
           title="Total Revenue"
-          value={`₹${Number(data.totals.revenue).toLocaleString("en-IN")}`}
+          value={`₹${Number(data?.totals?.revenue || 0).toLocaleString("en-IN")}`}
           icon={DollarSign}
         />
         <KpiCard
           title="Total Orders"
-          value={data.totals.orders}
+          value={data?.totals?.orders || 0}
           icon={ShoppingBag}
           link="/admin/orders"
           linkLabel="Manage Orders"
         />
         <KpiCard
           title="Total Registered Users"
-          value={data.totals.users}
+          value={data?.totals?.users || 0}
           icon={Users}
           link="/admin/users"
           linkLabel="Manage Users"
         />
         <KpiCard
           title="Live Active Products"
-          value={data.totals.activeProducts}
+          value={data?.totals?.activeProducts || 0}
           icon={Package}
           link="/admin/products"
           linkLabel="Manage Products"
