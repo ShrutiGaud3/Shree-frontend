@@ -438,7 +438,10 @@ export const Drawer = ({
  * ============================================================================
  */
 export const Tabs = ({ tabs = [], activeTab, onChange, className = "" }) => (
-  <div className={`flex flex-wrap gap-2 border-b border-accent/30 pb-2 ${className}`}>
+  <div
+    className={`flex items-center gap-1.5 sm:gap-2 overflow-x-auto scrollbar-none pb-2.5 border-b border-accent/25 w-full max-w-full ${className}`}
+    style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+  >
     {tabs.map((tab) => {
       const isActive = activeTab === tab.id;
       return (
@@ -446,10 +449,10 @@ export const Tabs = ({ tabs = [], activeTab, onChange, className = "" }) => (
           key={tab.id}
           type="button"
           onClick={() => onChange(tab.id)}
-          className={`rounded-xl px-4 py-2 text-sm font-bold transition-all duration-150 cursor-pointer ${
+          className={`flex-shrink-0 whitespace-nowrap rounded-xl px-3.5 sm:px-4 py-2 text-xs sm:text-sm font-bold transition-all duration-150 cursor-pointer ${
             isActive
-              ? "bg-primary text-text shadow-sm border border-accent/40"
-              : "bg-surface/60 text-text-muted hover:bg-surface hover:text-text"
+              ? "bg-primary text-text shadow-sm border border-accent/40 font-black"
+              : "bg-surface/70 text-text-muted hover:bg-surface hover:text-text border border-transparent"
           }`}
         >
           {tab.label}
