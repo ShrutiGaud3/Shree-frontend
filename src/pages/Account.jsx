@@ -90,45 +90,74 @@ const Account = () => {
       />
 
       {/* Profile Overview Card */}
-      <div className="rounded-3xl bg-surface-card p-4 sm:p-8 border-2 border-accent/25 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 sm:gap-6">
-        <div className="flex items-center gap-4">
-          <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-2xl bg-primary font-serif font-black text-2xl text-text shadow-sm border-2 border-accent/30">
-            {user?.name ? user.name[0].toUpperCase() : "U"}
-          </div>
-          <div className="space-y-1">
-            <div className="flex items-center gap-2">
-              <h1 className="font-serif text-2xl font-black text-text">
-                {user?.name}
-              </h1>
-              {isAdmin && <Badge tone="pink">Store Admin</Badge>}
-            </div>
-            <div className="flex flex-wrap items-center gap-3 text-xs text-text-muted">
-              <span className="flex items-center gap-1">
-                <Mail className="h-3.5 w-3.5 text-accent" />
-                {user?.email}
-              </span>
-              {user?.phone && (
-                <span className="flex items-center gap-1">
-                  <Phone className="h-3.5 w-3.5 text-accent" />
-                  {user.phone}
-                </span>
-              )}
-            </div>
-          </div>
-        </div>
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-white via-[#FFFBF7] to-[#FFF4F8] p-5 sm:p-7 border-2 border-accent/30 shadow-xs">
+        <div aria-hidden="true" className="pointer-events-none absolute -top-10 -right-10 h-40 w-40 rounded-full bg-primary/20 blur-2xl" />
 
-        {/* Quick actions */}
-        <div className="flex flex-wrap gap-2 w-full sm:w-auto">
-          <Link to="/orders" className="flex-1 sm:flex-none">
-            <Button variant="secondary" size="sm" icon={ShoppingBag} className="w-full">
-              My Orders
-            </Button>
-          </Link>
-          <Link to="/contact" className="flex-1 sm:flex-none">
-            <Button variant="soft" size="sm" icon={Mail} className="w-full">
-              Help & Support
-            </Button>
-          </Link>
+        <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-5 sm:gap-6">
+          {/* User Info Group */}
+          <div className="flex items-center gap-4 sm:gap-5 min-w-0">
+            {/* Avatar */}
+            <div className="flex h-14 w-14 sm:h-16 sm:w-16 flex-shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-primary via-primary-soft to-[#FBE7D0] font-serif font-black text-xl sm:text-2xl text-text shadow-xs border-2 border-accent/40">
+              {user?.name ? user.name[0].toUpperCase() : "U"}
+            </div>
+
+            {/* Details */}
+            <div className="min-w-0 flex-1 space-y-1.5">
+              <div className="flex flex-wrap items-center gap-2">
+                <h1 className="font-serif text-xl sm:text-2xl font-bold text-text truncate">
+                  {user?.name || "Customer Account"}
+                </h1>
+                {isAdmin ? (
+                  <span className="inline-flex items-center gap-1 rounded-full bg-pink-100 border border-pink-300 px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wider text-pink-900">
+                    <ShieldCheck className="h-3 w-3 text-pink-600" /> Store Admin
+                  </span>
+                ) : (
+                  <span className="inline-flex items-center gap-1 rounded-full bg-surface border border-accent/30 px-2.5 py-0.5 text-[10px] font-bold text-text-muted">
+                    <Sparkles className="h-3 w-3 text-primary-hover" /> Member
+                  </span>
+                )}
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs text-text-muted">
+                {user?.email && (
+                  <span className="inline-flex items-center gap-1.5 rounded-lg bg-surface/60 px-2.5 py-1 border border-accent/15 truncate max-w-full font-medium">
+                    <Mail className="h-3.5 w-3.5 text-accent flex-shrink-0" />
+                    <span className="truncate">{user.email}</span>
+                  </span>
+                )}
+                {user?.phone && (
+                  <span className="inline-flex items-center gap-1.5 rounded-lg bg-surface/60 px-2.5 py-1 border border-accent/15 font-medium">
+                    <Phone className="h-3.5 w-3.5 text-accent flex-shrink-0" />
+                    <span>{user.phone}</span>
+                  </span>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Quick Action Buttons */}
+          <div className="flex items-center gap-2.5 pt-2 md:pt-0 border-t md:border-t-0 border-accent/15 w-full md:w-auto">
+            <Link to="/orders" className="flex-1 md:flex-none">
+              <Button
+                variant="secondary"
+                size="sm"
+                icon={ShoppingBag}
+                className="w-full text-xs font-bold shadow-xs hover:shadow-md transition-all"
+              >
+                My Orders
+              </Button>
+            </Link>
+            <Link to="/contact" className="flex-1 md:flex-none">
+              <Button
+                variant="soft"
+                size="sm"
+                icon={Mail}
+                className="w-full text-xs font-bold"
+              >
+                Help & Support
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
 
