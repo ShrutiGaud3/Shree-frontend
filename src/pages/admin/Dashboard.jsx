@@ -133,32 +133,32 @@ const Dashboard = () => {
       </div>
 
       {/* Secondary Insights Grid */}
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-4 sm:gap-6 grid-cols-1 lg:grid-cols-2 w-full max-w-full min-w-0">
         {/* Orders by Status */}
-        <div className="rounded-3xl bg-surface-card p-6 border-2 border-accent/25 shadow-xs space-y-4">
-          <div className="flex items-center justify-between border-b border-accent/20 pb-3">
-            <h2 className="font-serif font-bold text-lg text-text">
+        <div className="rounded-3xl bg-surface-card p-4 sm:p-6 border-2 border-accent/25 shadow-xs space-y-4 w-full max-w-full min-w-0 overflow-hidden">
+          <div className="flex items-center justify-between border-b border-accent/20 pb-3 min-w-0 gap-2">
+            <h2 className="font-serif font-bold text-base sm:text-lg text-text truncate">
               Orders by Status
             </h2>
-            <Link to="/admin/orders" className="text-xs font-bold text-accent hover:underline">
+            <Link to="/admin/orders" className="text-xs font-bold text-accent hover:underline flex-shrink-0">
               View All
             </Link>
           </div>
 
-          <div className="space-y-2">
-            {Object.entries(data.ordersByStatus || {}).map(([s, c]) => (
+          <div className="space-y-2 max-h-72 overflow-y-auto pr-0.5">
+            {Object.entries(data?.ordersByStatus || {}).map(([s, c]) => (
               <div
                 key={s}
-                className="flex items-center justify-between rounded-2xl bg-surface/40 px-4 py-2.5 border border-accent/15"
+                className="flex items-center justify-between rounded-2xl bg-surface/40 px-3 sm:px-4 py-2.5 border border-accent/15 min-w-0 gap-2"
               >
-                <div className="flex items-center gap-2">
-                  <span className="h-2 w-2 rounded-full bg-accent" />
-                  <span className="capitalize text-xs font-bold text-text">{s}</span>
+                <div className="flex items-center gap-2 min-w-0 truncate">
+                  <span className="h-2 w-2 rounded-full bg-accent flex-shrink-0" />
+                  <span className="capitalize text-xs font-bold text-text truncate">{s}</span>
                 </div>
-                <span className="font-serif font-black text-sm text-text">{c}</span>
+                <span className="font-serif font-black text-sm text-text flex-shrink-0">{c}</span>
               </div>
             ))}
-            {Object.keys(data.ordersByStatus || {}).length === 0 && (
+            {Object.keys(data?.ordersByStatus || {}).length === 0 && (
               <p className="text-xs text-text-muted py-4 text-center">
                 No orders recorded yet.
               </p>
@@ -167,35 +167,35 @@ const Dashboard = () => {
         </div>
 
         {/* Low Stock Alerts */}
-        <div className="rounded-3xl bg-surface-card p-6 border-2 border-accent/25 shadow-xs space-y-4">
-          <div className="flex items-center justify-between border-b border-accent/20 pb-3">
-            <div className="flex items-center gap-2">
-              <AlertTriangle className="h-4 w-4 text-amber-700" />
-              <h2 className="font-serif font-bold text-lg text-text">
-                Low Stock Alerts (≤ {data.lowStockThreshold})
+        <div className="rounded-3xl bg-surface-card p-4 sm:p-6 border-2 border-accent/25 shadow-xs space-y-4 w-full max-w-full min-w-0 overflow-hidden">
+          <div className="flex items-center justify-between border-b border-accent/20 pb-3 min-w-0 gap-2">
+            <div className="flex items-center gap-2 min-w-0 truncate">
+              <AlertTriangle className="h-4 w-4 text-amber-700 flex-shrink-0" />
+              <h2 className="font-serif font-bold text-base sm:text-lg text-text truncate">
+                Low Stock Alerts (≤ {data?.lowStockThreshold || 5})
               </h2>
             </div>
-            <Link to="/admin/products" className="text-xs font-bold text-accent hover:underline">
+            <Link to="/admin/products" className="text-xs font-bold text-accent hover:underline flex-shrink-0">
               Update Stock
             </Link>
           </div>
 
-          <div className="space-y-2 max-h-72 overflow-y-auto pr-1">
-            {(data.lowStock || []).map((p) => (
+          <div className="space-y-2 max-h-72 overflow-y-auto pr-0.5">
+            {(data?.lowStock || []).map((p) => (
               <div
                 key={p._id}
-                className="flex items-center justify-between gap-2 rounded-2xl bg-amber-50/60 p-3 border border-amber-200 text-xs"
+                className="flex items-center justify-between gap-2.5 rounded-2xl bg-amber-50/60 p-3 border border-amber-200 text-xs min-w-0"
               >
-                <div className="truncate">
+                <div className="min-w-0 flex-1 truncate">
                   <p className="font-bold text-text truncate">{p.name}</p>
-                  <p className="text-[11px] text-text-muted">SKU: {p.sku}</p>
+                  <p className="text-[11px] text-text-muted truncate">SKU: {p.sku}</p>
                 </div>
-                <span className="rounded-full bg-amber-100 border border-amber-300 px-2.5 py-0.5 font-bold text-amber-900 whitespace-nowrap">
+                <span className="rounded-full bg-amber-100 border border-amber-300 px-2.5 py-0.5 font-bold text-amber-900 whitespace-nowrap flex-shrink-0 text-[11px]">
                   {p.variants?.length ? `${p.variants.length} Variants` : `${p.stock} left`}
                 </span>
               </div>
             ))}
-            {(data.lowStock || []).length === 0 && (
+            {(data?.lowStock || []).length === 0 && (
               <div className="py-6 text-center text-xs font-bold text-green-800 bg-green-50 rounded-2xl border border-green-200">
                 ✨ All inventory is comfortably stocked!
               </div>
@@ -205,10 +205,10 @@ const Dashboard = () => {
       </div>
 
       {/* Analytics (paid orders only; independent load state) */}
-      <div className="rounded-3xl bg-surface-card p-6 border-2 border-accent/25 shadow-xs space-y-4">
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-accent/20 pb-3">
-          <h2 className="font-serif font-bold text-lg text-text">Sales Analytics</h2>
-          <div className="flex gap-1.5">
+      <div className="rounded-3xl bg-surface-card p-4 sm:p-6 border-2 border-accent/25 shadow-xs space-y-4 w-full max-w-full min-w-0 overflow-hidden">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-accent/20 pb-3 min-w-0">
+          <h2 className="font-serif font-bold text-base sm:text-lg text-text">Sales Analytics</h2>
+          <div className="flex gap-1.5 flex-shrink-0">
             {[7, 14, 30].map((d) => (
               <button
                 key={d}
@@ -227,26 +227,28 @@ const Dashboard = () => {
         {anaState === "loading" && <Loader label="Crunching sales numbers…" />}
         {anaState === "error" && <ErrorState message={anaError} onRetry={() => window.location.reload()} />}
         {anaState === "done" && analytics && (
-          <div className="space-y-6">
-            <SalesChart series={analytics.salesSeries} />
+          <div className="space-y-6 w-full max-w-full min-w-0">
+            <div className="w-full max-w-full min-w-0 overflow-hidden">
+              <SalesChart series={analytics.salesSeries} />
+            </div>
 
-            <div className="grid gap-6 md:grid-cols-2">
-              <div className="space-y-3">
+            <div className="grid gap-6 grid-cols-1 lg:grid-cols-2 w-full max-w-full min-w-0">
+              <div className="space-y-3 w-full max-w-full min-w-0 overflow-hidden">
                 <h3 className="text-xs font-black uppercase tracking-wider text-text-muted">Revenue by Category</h3>
                 <CategoryDonut slices={analytics.categoryPie} />
               </div>
 
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-xs font-black uppercase tracking-wider text-text-muted">Top Products</h3>
-                  <Link to="/admin/products" className="text-xs font-bold text-accent hover:underline">Manage</Link>
+              <div className="space-y-3 w-full max-w-full min-w-0 overflow-hidden">
+                <div className="flex items-center justify-between min-w-0">
+                  <h3 className="text-xs font-black uppercase tracking-wider text-text-muted truncate">Top Products</h3>
+                  <Link to="/admin/products" className="text-xs font-bold text-accent hover:underline flex-shrink-0">Manage</Link>
                 </div>
                 {(analytics.topProducts || []).length === 0 && (
                   <p className="text-xs text-text-muted py-4 text-center">No paid sales in this period yet.</p>
                 )}
-                <div className="space-y-2 max-h-72 overflow-y-auto pr-1">
+                <div className="space-y-2 max-h-72 overflow-y-auto pr-0.5">
                   {(analytics.topProducts || []).map((t) => (
-                    <div key={String(t.productId)} className="flex items-center gap-3 rounded-2xl bg-surface/40 px-3 py-2 border border-accent/15">
+                    <div key={String(t.productId)} className="flex items-center gap-3 rounded-2xl bg-surface/40 px-3 py-2 border border-accent/15 min-w-0">
                       <div className="h-10 w-10 flex-shrink-0 overflow-hidden rounded-xl bg-surface border border-accent/30">
                         {t.image ? (
                           <img src={t.image} alt="" loading="lazy" className="h-full w-full object-cover" />
@@ -254,9 +256,9 @@ const Dashboard = () => {
                           <div className="flex h-full w-full items-center justify-center">🎁</div>
                         )}
                       </div>
-                      <div className="flex-1 min-w-0">
+                      <div className="flex-1 min-w-0 truncate">
                         <p className="font-bold text-xs text-text truncate">{t.name}</p>
-                        <p className="text-[11px] text-text-muted">{t.units} sold · ₹{Number(t.revenue).toLocaleString("en-IN")}</p>
+                        <p className="text-[11px] text-text-muted truncate">{t.units} sold · ₹{Number(t.revenue).toLocaleString("en-IN")}</p>
                       </div>
                     </div>
                   ))}
@@ -264,15 +266,15 @@ const Dashboard = () => {
               </div>
             </div>
 
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <h3 className="text-xs font-black uppercase tracking-wider text-text-muted">Recent Orders</h3>
-                <Link to="/admin/orders" className="text-xs font-bold text-accent hover:underline">View All</Link>
+            <div className="space-y-3 w-full max-w-full min-w-0">
+              <div className="flex items-center justify-between min-w-0">
+                <h3 className="text-xs font-black uppercase tracking-wider text-text-muted truncate">Recent Orders</h3>
+                <Link to="/admin/orders" className="text-xs font-bold text-accent hover:underline flex-shrink-0">View All</Link>
               </div>
               {(analytics.recentOrders || []).length === 0 ? (
                 <p className="text-xs text-text-muted py-4 text-center">No orders yet.</p>
               ) : (
-                <div className="overflow-x-auto rounded-2xl border border-accent/15">
+                <div className="overflow-x-auto rounded-2xl border border-accent/15 w-full max-w-full">
                   <table className="w-full text-xs">
                     <thead>
                       <tr className="bg-surface/60 text-left text-text-muted uppercase text-[10px]">
@@ -285,10 +287,10 @@ const Dashboard = () => {
                     <tbody>
                       {(analytics.recentOrders || []).map((o) => (
                         <tr key={o._id} className="border-t border-accent/15">
-                          <td className="px-3 py-2 font-bold text-text">{o.user?.name || "Guest"}</td>
+                          <td className="px-3 py-2 font-bold text-text truncate max-w-[120px]">{o.user?.name || "Guest"}</td>
                           <td className="px-3 py-2 text-text-muted">{o.itemCount}</td>
-                          <td className="px-3 py-2 font-bold text-text">₹{Number(o.totalAmount).toLocaleString("en-IN")}</td>
-                          <td className="px-3 py-2"><Badge tone="pink" size="xs">{o.status}</Badge></td>
+                          <td className="px-3 py-2 font-bold text-text whitespace-nowrap">₹{Number(o.totalAmount).toLocaleString("en-IN")}</td>
+                          <td className="px-3 py-2 whitespace-nowrap"><Badge tone="pink" size="xs">{o.status}</Badge></td>
                         </tr>
                       ))}
                     </tbody>
