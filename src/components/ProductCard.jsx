@@ -84,11 +84,11 @@ const ProductCard = ({ product, onAddedToCart }) => {
       : 0;
 
   return (
-    <div className="group relative flex flex-col overflow-hidden rounded-2xl bg-white border border-border shadow-xs transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-primary/40">
+    <div className="group relative flex flex-col h-full overflow-hidden rounded-2xl bg-white border border-border shadow-xs transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-primary/40">
       {/* Top Image Container */}
       <Link
         to={`/products/${product.slug || product._id}`}
-        className={`relative block aspect-square w-full overflow-hidden ${
+        className={`relative block aspect-square w-full flex-shrink-0 overflow-hidden ${
           isJewellery ? "bg-[#FFF5F8]" : "bg-[#FFF9EE]"
         }`}
       >
@@ -174,38 +174,40 @@ const ProductCard = ({ product, onAddedToCart }) => {
       </Link>
 
       {/* Card Body */}
-      <div className="flex flex-1 flex-col p-2.5 sm:p-3.5 space-y-1">
-        {/* Category & Subcategory line */}
-        <div className="flex items-center justify-between text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-text-muted">
-          <span className={isJewellery ? "text-primary-hover" : "text-accent"}>
-            {product.category}
-          </span>
-          {product.subCategory && (
-            <span className="capitalize truncate max-w-[80px] sm:max-w-none">{product.subCategory.replace(/-/g, " ")}</span>
-          )}
-        </div>
+      <div className="flex flex-1 flex-col justify-between p-2.5 sm:p-3.5 space-y-2">
+        <div className="space-y-1">
+          {/* Category & Subcategory line */}
+          <div className="flex items-center justify-between text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-text-muted">
+            <span className={isJewellery ? "text-primary-hover" : "text-accent"}>
+              {product.category}
+            </span>
+            {product.subCategory && (
+              <span className="capitalize truncate max-w-[80px] sm:max-w-none">{product.subCategory.replace(/-/g, " ")}</span>
+            )}
+          </div>
 
-        {/* Product Title */}
-        <Link
-          to={`/products/${product.slug || product._id}`}
-          className="font-serif font-bold text-xs sm:text-sm text-text line-clamp-2 hover:text-primary-hover transition-colors leading-snug"
-          title={product.name}
-        >
-          {product.name}
-        </Link>
+          {/* Product Title (Consistent 2-line height) */}
+          <Link
+            to={`/products/${product.slug || product._id}`}
+            className="font-serif font-bold text-xs sm:text-sm text-text line-clamp-2 hover:text-primary-hover transition-colors leading-snug min-h-[2rem] sm:min-h-[2.4rem] flex items-start"
+            title={product.name}
+          >
+            {product.name}
+          </Link>
 
-        {/* Rating & Guarantee Row */}
-        <div className="flex items-center justify-between gap-1 flex-wrap">
-          <div className="flex items-center gap-1">
-            <Stars value={product.ratingAvg || 5} size="xs" />
-            <span className="text-[9px] sm:text-[10px] font-bold text-text-muted">
-              ({product.ratingCount || 0})
+          {/* Rating & Guarantee Row */}
+          <div className="flex items-center justify-between gap-1 flex-wrap pt-0.5">
+            <div className="flex items-center gap-1">
+              <Stars value={product.ratingAvg || 5} size="xs" />
+              <span className="text-[9px] sm:text-[10px] font-bold text-text-muted">
+                ({product.ratingCount || 0})
+              </span>
+            </div>
+            <span className="inline-flex items-center gap-0.5 text-[8.5px] sm:text-[9px] font-bold text-emerald-800 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200/60">
+              <ShieldCheck className="h-2.5 w-2.5 text-emerald-600" />
+              <span>Guaranteed</span>
             </span>
           </div>
-          <span className="inline-flex items-center gap-0.5 text-[8.5px] sm:text-[9px] font-bold text-emerald-800 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200/60">
-            <ShieldCheck className="h-2.5 w-2.5 text-emerald-600" />
-            <span>Guaranteed</span>
-          </span>
         </div>
 
         {/* Price Block */}

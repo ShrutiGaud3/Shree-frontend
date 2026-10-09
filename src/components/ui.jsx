@@ -565,15 +565,17 @@ export const Skeleton = ({ className = "", rounded = "rounded-2xl" }) => (
 );
 
 export const ProductSkeleton = () => (
-  <div className="flex flex-col overflow-hidden rounded-2xl bg-surface-card border border-accent/20 p-3 shadow-sm">
+  <div className="flex flex-col h-full justify-between overflow-hidden rounded-2xl bg-white border border-border p-2.5 sm:p-3.5 shadow-xs">
     <Skeleton className="aspect-square w-full rounded-xl" />
-    <div className="mt-3 space-y-2">
-      <Skeleton className="h-4 w-1/3 rounded-md" />
-      <Skeleton className="h-5 w-4/5 rounded-md" />
-      <Skeleton className="h-4 w-1/2 rounded-md" />
-      <div className="pt-2 flex justify-between items-center">
-        <Skeleton className="h-6 w-20 rounded-md" />
-        <Skeleton className="h-8 w-8 rounded-full" />
+    <div className="mt-3 space-y-2 flex-1 flex flex-col justify-between">
+      <div className="space-y-1.5">
+        <Skeleton className="h-3 w-1/3 rounded-md" />
+        <Skeleton className="h-8 w-4/5 rounded-md" />
+        <Skeleton className="h-3.5 w-1/2 rounded-md" />
+      </div>
+      <div className="pt-2 flex justify-between items-center border-t border-border/60">
+        <Skeleton className="h-5 w-16 rounded-md" />
+        <Skeleton className="h-7 w-7 rounded-full" />
       </div>
     </div>
   </div>

@@ -165,11 +165,11 @@ const Home = () => {
 
         {state === "loading" && (
           <div
-            className="flex overflow-x-auto gap-3 pb-3 -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-3 lg:grid-cols-4 sm:gap-4 sm:pb-0 snap-x snap-mandatory scrollbar-none"
+            className="flex overflow-x-auto items-stretch gap-3 pb-3 -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-3 lg:grid-cols-4 sm:gap-4 sm:pb-0 snap-x snap-mandatory scrollbar-none"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
             {[1, 2, 3, 4].map((n) => (
-              <div key={n} className="w-[160px] xs:w-[175px] sm:w-auto flex-shrink-0 snap-start">
+              <div key={n} className="w-[160px] xs:w-[175px] sm:w-auto flex-shrink-0 snap-start flex flex-col">
                 <ProductSkeleton />
               </div>
             ))}
@@ -182,11 +182,11 @@ const Home = () => {
 
         {state === "done" && (
           <div
-            className="flex overflow-x-auto gap-3 pb-3 -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-3 lg:grid-cols-4 sm:gap-4 sm:pb-0 snap-x snap-mandatory scrollbar-none"
+            className="flex overflow-x-auto items-stretch gap-3 pb-3 -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-3 lg:grid-cols-4 sm:gap-4 sm:pb-0 snap-x snap-mandatory scrollbar-none"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
             {featured.map((p) => (
-              <div key={p._id} className="w-[160px] xs:w-[175px] sm:w-auto flex-shrink-0 snap-start">
+              <div key={p._id} className="w-[160px] xs:w-[175px] sm:w-auto flex-shrink-0 snap-start flex flex-col">
                 <ProductCard product={p} />
               </div>
             ))}
@@ -217,11 +217,11 @@ const Home = () => {
 
         {state === "loading" && (
           <div
-            className="flex overflow-x-auto gap-3 pb-3 -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-3 lg:grid-cols-4 sm:gap-4 sm:pb-0 snap-x snap-mandatory scrollbar-none"
+            className="flex overflow-x-auto items-stretch gap-3 pb-3 -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-3 lg:grid-cols-4 sm:gap-4 sm:pb-0 snap-x snap-mandatory scrollbar-none"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
             {[1, 2, 3, 4].map((n) => (
-              <div key={n} className="w-[160px] xs:w-[175px] sm:w-auto flex-shrink-0 snap-start">
+              <div key={n} className="w-[160px] xs:w-[175px] sm:w-auto flex-shrink-0 snap-start flex flex-col">
                 <ProductSkeleton />
               </div>
             ))}
@@ -230,11 +230,11 @@ const Home = () => {
 
         {state === "done" && jewellery.length > 0 && (
           <div
-            className="flex overflow-x-auto gap-3 pb-3 -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-3 lg:grid-cols-4 sm:gap-4 sm:pb-0 snap-x snap-mandatory scrollbar-none"
+            className="flex overflow-x-auto items-stretch gap-3 pb-3 -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-3 lg:grid-cols-4 sm:gap-4 sm:pb-0 snap-x snap-mandatory scrollbar-none"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
             {jewellery.map((p) => (
-              <div key={p._id} className="w-[160px] xs:w-[175px] sm:w-auto flex-shrink-0 snap-start">
+              <div key={p._id} className="w-[160px] xs:w-[175px] sm:w-auto flex-shrink-0 snap-start flex flex-col">
                 <ProductCard product={p} />
               </div>
             ))}
@@ -363,11 +363,11 @@ const Home = () => {
 
         {state === "loading" && (
           <div
-            className="flex overflow-x-auto gap-3 pb-3 -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-3 lg:grid-cols-4 sm:gap-4 sm:pb-0 snap-x snap-mandatory scrollbar-none"
+            className="flex overflow-x-auto items-stretch gap-3 pb-3 -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-3 lg:grid-cols-4 sm:gap-4 sm:pb-0 snap-x snap-mandatory scrollbar-none"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
             {[1, 2, 3, 4].map((n) => (
-              <div key={n} className="w-[160px] xs:w-[175px] sm:w-auto flex-shrink-0 snap-start">
+              <div key={n} className="w-[160px] xs:w-[175px] sm:w-auto flex-shrink-0 snap-start flex flex-col">
                 <ProductSkeleton />
               </div>
             ))}
@@ -376,11 +376,11 @@ const Home = () => {
 
         {state === "done" && toys.length > 0 && (
           <div
-            className="flex overflow-x-auto gap-3 pb-3 -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-3 lg:grid-cols-4 sm:gap-4 sm:pb-0 snap-x snap-mandatory scrollbar-none"
+            className="flex overflow-x-auto items-stretch gap-3 pb-3 -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-3 lg:grid-cols-4 sm:gap-4 sm:pb-0 snap-x snap-mandatory scrollbar-none"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
             {toys.map((p) => (
-              <div key={p._id} className="w-[160px] xs:w-[175px] sm:w-auto flex-shrink-0 snap-start">
+              <div key={p._id} className="w-[160px] xs:w-[175px] sm:w-auto flex-shrink-0 snap-start flex flex-col">
                 <ProductCard product={p} />
               </div>
             ))}
