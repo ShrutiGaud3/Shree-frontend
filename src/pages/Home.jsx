@@ -165,7 +165,7 @@ const Home = () => {
 
         {state === "loading" && (
           <div
-            className="flex overflow-x-auto items-stretch gap-3 pb-3 -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-3 lg:grid-cols-4 sm:gap-4 sm:pb-0 snap-x snap-mandatory scrollbar-none"
+            className="flex overflow-x-auto items-stretch gap-3.5 pb-3.5 pt-1 px-1 sm:px-0 sm:grid sm:grid-cols-3 lg:grid-cols-4 sm:gap-4 sm:pb-0 snap-x snap-mandatory scrollbar-none"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
             {[1, 2, 3, 4].map((n) => (
@@ -182,7 +182,7 @@ const Home = () => {
 
         {state === "done" && (
           <div
-            className="flex overflow-x-auto items-stretch gap-3 pb-3 -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-3 lg:grid-cols-4 sm:gap-4 sm:pb-0 snap-x snap-mandatory scrollbar-none"
+            className="flex overflow-x-auto items-stretch gap-3.5 pb-3.5 pt-1 px-1 sm:px-0 sm:grid sm:grid-cols-3 lg:grid-cols-4 sm:gap-4 sm:pb-0 snap-x snap-mandatory scrollbar-none"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
             {featured.map((p) => (
@@ -217,7 +217,7 @@ const Home = () => {
 
         {state === "loading" && (
           <div
-            className="flex overflow-x-auto items-stretch gap-3 pb-3 -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-3 lg:grid-cols-4 sm:gap-4 sm:pb-0 snap-x snap-mandatory scrollbar-none"
+            className="flex overflow-x-auto items-stretch gap-3.5 pb-3.5 pt-1 px-1 sm:px-0 sm:grid sm:grid-cols-3 lg:grid-cols-4 sm:gap-4 sm:pb-0 snap-x snap-mandatory scrollbar-none"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
             {[1, 2, 3, 4].map((n) => (
@@ -230,7 +230,7 @@ const Home = () => {
 
         {state === "done" && jewellery.length > 0 && (
           <div
-            className="flex overflow-x-auto items-stretch gap-3 pb-3 -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-3 lg:grid-cols-4 sm:gap-4 sm:pb-0 snap-x snap-mandatory scrollbar-none"
+            className="flex overflow-x-auto items-stretch gap-3.5 pb-3.5 pt-1 px-1 sm:px-0 sm:grid sm:grid-cols-3 lg:grid-cols-4 sm:gap-4 sm:pb-0 snap-x snap-mandatory scrollbar-none"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
             {jewellery.map((p) => (
@@ -363,7 +363,7 @@ const Home = () => {
 
         {state === "loading" && (
           <div
-            className="flex overflow-x-auto items-stretch gap-3 pb-3 -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-3 lg:grid-cols-4 sm:gap-4 sm:pb-0 snap-x snap-mandatory scrollbar-none"
+            className="flex overflow-x-auto items-stretch gap-3.5 pb-3.5 pt-1 px-1 sm:px-0 sm:grid sm:grid-cols-3 lg:grid-cols-4 sm:gap-4 sm:pb-0 snap-x snap-mandatory scrollbar-none"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
             {[1, 2, 3, 4].map((n) => (
@@ -376,7 +376,7 @@ const Home = () => {
 
         {state === "done" && toys.length > 0 && (
           <div
-            className="flex overflow-x-auto items-stretch gap-3 pb-3 -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-3 lg:grid-cols-4 sm:gap-4 sm:pb-0 snap-x snap-mandatory scrollbar-none"
+            className="flex overflow-x-auto items-stretch gap-3.5 pb-3.5 pt-1 px-1 sm:px-0 sm:grid sm:grid-cols-3 lg:grid-cols-4 sm:gap-4 sm:pb-0 snap-x snap-mandatory scrollbar-none"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
             {toys.map((p) => (
