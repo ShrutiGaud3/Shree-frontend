@@ -23,6 +23,10 @@ import {
   Check,
   Gift,
   Gem,
+  X,
+  Trash2,
+  Image as ImageIcon,
+  RotateCcw,
 } from "lucide-react";
 
 const emptyForm = {
@@ -50,8 +54,29 @@ const ProductsAdmin = () => {
   const [error, setError] = useState("");
   const [form, setForm] = useState(emptyForm);
   const [files, setFiles] = useState([]);
+  const [filePreviews, setFilePreviews] = useState([]);
+  const [existingImages, setExistingImages] = useState([]);
+  const [removeImages, setRemoveImages] = useState([]);
   const [editing, setEditing] = useState(null);
   const [busy, setBusy] = useState(false);
+
+  // Sync previews whenever selected files change
+  useEffect(() => {
+    if (!files.length) {
+      setFilePreviews([]);
+      return;
+    }
+    const previews = files.map((file) => ({
+      name: file.name,
+      size: (file.size / 1024).toFixed(0) + " KB",
+      url: URL.createObjectURL(file),
+    }));
+    setFilePreviews(previews);
+
+    return () => {
+      previews.forEach((p) => URL.revokeObjectURL(p.url));
+    };
+  }, [files]);
 
   const load = () => {
     setState("loading");
@@ -68,6 +93,44 @@ const ProductsAdmin = () => {
   };
 
   useEffect(load, []);
+
+  const handleFileChange = (e) => {
+    const selected = Array.from(e.target.files || []);
+    if (!selected.length) return;
+    // Allow appending up to remaining slots (max 5)
+    const activeExistingCount = existingImages.filter(
+      (img) => !removeImages.includes(img.publicId) && !removeImages.includes(img.url)
+    ).length;
+    const maxAllowed = Math.max(0, 5 - activeExistingCount);
+    
+    setFiles((prev) => {
+      const combined = [...prev, ...selected].slice(0, maxAllowed || 5);
+      return combined;
+    });
+    // Reset input value so re-selecting same file triggers change
+    e.target.value = "";
+  };
+
+  const removeSelectedFile = (idx) => {
+    setFiles((prev) => prev.filter((_, i) => i !== idx));
+  };
+
+  const toggleRemoveExisting = (img) => {
+    const identifier = img.publicId || img.url;
+    setRemoveImages((prev) =>
+      prev.includes(identifier)
+        ? prev.filter((id) => id !== identifier)
+        : [...prev, identifier]
+    );
+  };
+
+  const cancelForm = () => {
+    setEditing(null);
+    setForm(emptyForm);
+    setFiles([]);
+    setExistingImages([]);
+    setRemoveImages([]);
+  };
 
   const submit = async (e) => {
     e.preventDefault();
@@ -99,15 +162,18 @@ const ProductsAdmin = () => {
           fd.append(k, typeof v === "boolean" ? String(v) : v);
         }
       });
-      [...files].slice(0, 5).forEach((f) => fd.append("images", f));
+
+      if (editing && removeImages.length > 0) {
+        fd.append("removeImages", JSON.stringify(removeImages));
+      }
+
+      files.slice(0, 5).forEach((f) => fd.append("images", f));
 
       if (editing) await api.put(`/admin/products/${editing}`, fd);
       else await api.post("/admin/products", fd);
 
       toast.success(editing ? "Product updated successfully! ✨" : "New product published! ✨");
-      setForm(emptyForm);
-      setFiles([]);
-      setEditing(null);
+      cancelForm();
       load();
     } catch (err) {
       toast.error(apiError(err));
@@ -118,6 +184,9 @@ const ProductsAdmin = () => {
 
   const startEdit = (p) => {
     setEditing(p._id);
+    setExistingImages(p.images || []);
+    setRemoveImages([]);
+    setFiles([]);
     setForm({
       name: p.name || "",
       description: p.description || "",
@@ -182,10 +251,7 @@ const ProductsAdmin = () => {
           {editing && (
             <button
               type="button"
-              onClick={() => {
-                setEditing(null);
-                setForm(emptyForm);
-              }}
+              onClick={cancelForm}
               className="text-xs font-bold text-text-muted hover:underline"
             >
               Cancel Edit
@@ -308,19 +374,157 @@ const ProductsAdmin = () => {
             onChange={(e) => setForm({ ...form, guarantee: e.target.value })}
             placeholder="100% Quality & Authenticity Guarantee with 7-Day Easy Support"
           />
+        </div>
 
-          <div>
-            <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-text">
-              Images (Max 5)
-            </label>
+        {/* Product Images & Previews */}
+        <div className="space-y-3 rounded-2xl bg-surface/50 p-4 border border-accent/20">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-wider text-text">
+                Product Visuals & Images
+              </label>
+              <p className="text-[11px] text-text-muted">
+                Add up to 5 high-resolution photos (JPEG, PNG, WebP · max 5MB each)
+              </p>
+            </div>
+            <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-accent/15 text-accent-dark">
+              {existingImages.filter((img) => !removeImages.includes(img.publicId) && !removeImages.includes(img.url)).length + files.length} / 5 Images
+            </span>
+          </div>
+
+          {/* Upload Input Area */}
+          <div className="relative border-2 border-dashed border-accent/40 hover:border-accent rounded-2xl p-4 sm:p-5 bg-surface/30 text-center transition flex flex-col items-center justify-center gap-2 group">
             <input
               type="file"
               accept="image/jpeg,image/png,image/webp"
               multiple
-              onChange={(e) => setFiles(e.target.files)}
-              className="w-full text-xs text-text file:mr-2 file:rounded-xl file:border-0 file:bg-surface file:px-3 file:py-1.5 file:text-xs file:font-bold file:text-text hover:file:bg-primary-soft cursor-pointer"
+              onChange={handleFileChange}
+              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+              disabled={
+                existingImages.filter((img) => !removeImages.includes(img.publicId) && !removeImages.includes(img.url)).length + files.length >= 5
+              }
             />
+            <div className="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center text-accent group-hover:scale-110 transition">
+              <Upload className="w-5 h-5" />
+            </div>
+            <div className="text-xs">
+              <span className="font-bold text-accent hover:underline">
+                Click to browse
+              </span>{" "}
+              or drag & drop images here
+            </div>
+            <p className="text-[10px] text-text-muted">
+              Select multiple files to preview before publishing
+            </p>
           </div>
+
+          {/* Previews Gallery: Existing + New Uploads */}
+          {(existingImages.length > 0 || filePreviews.length > 0) && (
+            <div className="space-y-3 pt-2">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-text-muted flex items-center gap-1.5">
+                <ImageIcon className="w-3.5 h-3.5" />
+                Selected & Existing Images
+              </h4>
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                {/* Existing Images (when editing) */}
+                {existingImages.map((img, idx) => {
+                  const isMarkedForRemoval =
+                    removeImages.includes(img.publicId) || removeImages.includes(img.url);
+                  return (
+                    <div
+                      key={img.publicId || img.url || idx}
+                      className={`relative group rounded-2xl overflow-hidden border-2 bg-surface-card transition shadow-xs ${
+                        isMarkedForRemoval
+                          ? "border-red-400 opacity-40 grayscale"
+                          : "border-accent/30 hover:border-accent"
+                      }`}
+                    >
+                      <div className="aspect-square w-full bg-surface overflow-hidden">
+                        <img
+                          src={img.url}
+                          alt={img.alt || "Existing product visual"}
+                          className="w-full h-full object-cover group-hover:scale-105 transition"
+                        />
+                      </div>
+
+                      {/* Badges */}
+                      <div className="absolute top-1.5 left-1.5 flex flex-col gap-1 z-10 pointer-events-none">
+                        {img.isPrimary && !isMarkedForRemoval && (
+                          <span className="bg-accent text-white text-[9px] font-bold px-1.5 py-0.5 rounded-md shadow-xs">
+                            Primary
+                          </span>
+                        )}
+                        <span
+                          className={`text-[9px] font-bold px-1.5 py-0.5 rounded-md shadow-xs ${
+                            isMarkedForRemoval
+                              ? "bg-red-600 text-white"
+                              : "bg-surface-card/90 text-text backdrop-blur-xs border border-accent/20"
+                          }`}
+                        >
+                          {isMarkedForRemoval ? "Removed" : "Existing"}
+                        </span>
+                      </div>
+
+                      {/* Remove / Undo action */}
+                      <button
+                        type="button"
+                        onClick={() => toggleRemoveExisting(img)}
+                        title={isMarkedForRemoval ? "Undo removal" : "Delete image"}
+                        className={`absolute top-1.5 right-1.5 p-1.5 rounded-xl transition shadow-xs z-20 ${
+                          isMarkedForRemoval
+                            ? "bg-green-600 hover:bg-green-700 text-white"
+                            : "bg-red-600 hover:bg-red-700 text-white"
+                        }`}
+                      >
+                        {isMarkedForRemoval ? (
+                          <RotateCcw className="w-3.5 h-3.5" />
+                        ) : (
+                          <X className="w-3.5 h-3.5" />
+                        )}
+                      </button>
+                    </div>
+                  );
+                })}
+
+                {/* Newly Selected Uploads Preview */}
+                {filePreviews.map((p, idx) => (
+                  <div
+                    key={p.url || idx}
+                    className="relative group rounded-2xl overflow-hidden border-2 border-accent bg-surface-card shadow-xs animate-fadeIn"
+                  >
+                    <div className="aspect-square w-full bg-surface overflow-hidden">
+                      <img
+                        src={p.url}
+                        alt={p.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition"
+                      />
+                    </div>
+
+                    <div className="absolute top-1.5 left-1.5 z-10 pointer-events-none">
+                      <span className="bg-green-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-md shadow-xs">
+                        New
+                      </span>
+                    </div>
+
+                    <div className="p-1.5 bg-surface-card/90 border-t border-accent/15 text-[10px] text-text-muted truncate">
+                      <p className="font-bold truncate text-text">{p.name}</p>
+                      <p>{p.size}</p>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => removeSelectedFile(idx)}
+                      title="Remove from upload"
+                      className="absolute top-1.5 right-1.5 p-1.5 rounded-xl bg-red-600 hover:bg-red-700 text-white transition shadow-xs z-20"
+                    >
+                      <X className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Category Specs */}

@@ -5,7 +5,9 @@ export const STORE_NAME = "Shree 14";
 export const STORE_TITLE = "Shree 14 | Toys & Jewellery";
 export const STORE_TAGLINE = "Toys that spark joy, jewellery that shines.";
 
-export const API_BASE = import.meta.env.VITE_API_BASE_URL || "https://shree-backend-t1ea.onrender.com/api";
+export const API_BASE =
+  import.meta.env.VITE_API_BASE_URL ||
+  (import.meta.env.DEV ? "/api" : "https://shree-backend-t1ea.onrender.com/api");
 export const RAZORPAY_THEME_COLOR = "#FFAFCC"; // brand primary (checkout.js needs hex)
 
 export const CATEGORIES = {
