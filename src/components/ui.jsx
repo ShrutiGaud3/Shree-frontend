@@ -683,7 +683,7 @@ export const RatingSelect = ({ value = 5, onChange }) => (
  * PRICE DISPLAY COMPONENT
  * ============================================================================
  */
-export const Price = ({ price = 0, mrp, big = false, className = "" }) => {
+export const Price = ({ price = 0, mrp, big = false, showBadge = true, className = "" }) => {
   const hasDiscount = mrp && mrp > price;
   const discountPercent = hasDiscount ? Math.round(((mrp - price) / mrp) * 100) : 0;
 
@@ -697,9 +697,11 @@ export const Price = ({ price = 0, mrp, big = false, className = "" }) => {
           <span className={`text-text-muted line-through font-normal tabular-nums ${big ? "text-base sm:text-lg" : "text-[10px] sm:text-xs"}`}>
             ₹{Number(mrp).toLocaleString("en-IN")}
           </span>
-          <span className="rounded-full bg-primary-soft/90 px-2 py-0.5 text-[9px] sm:text-[10px] font-bold text-text border border-primary/30">
-            {discountPercent}% OFF
-          </span>
+          {showBadge && (
+            <span className="rounded-full bg-primary-soft/90 px-2 py-0.5 text-[9px] sm:text-[10px] font-bold text-text border border-primary/30">
+              {discountPercent}% OFF
+            </span>
+          )}
         </>
       )}
     </div>

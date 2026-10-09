@@ -187,7 +187,7 @@ const Home = () => {
           >
             {featured.map((p) => (
               <div key={p._id} className="w-[160px] xs:w-[175px] sm:w-auto flex-shrink-0 snap-start flex flex-col">
-                <ProductCard product={p} />
+                <ProductCard product={p} isHome={true} />
               </div>
             ))}
           </div>
@@ -235,7 +235,7 @@ const Home = () => {
           >
             {jewellery.map((p) => (
               <div key={p._id} className="w-[160px] xs:w-[175px] sm:w-auto flex-shrink-0 snap-start flex flex-col">
-                <ProductCard product={p} />
+                <ProductCard product={p} isHome={true} />
               </div>
             ))}
           </div>
@@ -381,7 +381,7 @@ const Home = () => {
           >
             {toys.map((p) => (
               <div key={p._id} className="w-[160px] xs:w-[175px] sm:w-auto flex-shrink-0 snap-start flex flex-col">
-                <ProductCard product={p} />
+                <ProductCard product={p} isHome={true} />
               </div>
             ))}
           </div>

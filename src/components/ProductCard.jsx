@@ -11,7 +11,13 @@ const notifyCartUpdated = () => window.dispatchEvent(new Event("shree:cart-updat
 
 const thumb = (p) => p.images?.find((i) => i.isPrimary)?.url || p.images?.[0]?.url;
 
-const ProductCard = ({ product, onAddedToCart }) => {
+const ProductCard = ({
+  product,
+  onAddedToCart,
+  isHome = false,
+  showRating = true,
+  showGuarantee = true,
+}) => {
   const { isLoggedIn } = useAuth();
   const navigate = useNavigate();
   const [adding, setAdding] = useState(false);
@@ -20,6 +26,9 @@ const ProductCard = ({ product, onAddedToCart }) => {
   const [wishing, setWishing] = useState(false);
 
   const mainImg = thumb(product);
+
+  const shouldShowRating = !isHome && showRating;
+  const shouldShowGuarantee = !isHome && showGuarantee;
 
   const handleQuickAdd = async (e) => {
     e.preventDefault();
@@ -195,24 +204,30 @@ const ProductCard = ({ product, onAddedToCart }) => {
             {product.name}
           </Link>
 
-          {/* Rating & Guarantee Row */}
-          <div className="flex items-center justify-between gap-1 flex-wrap pt-0.5">
-            <div className="flex items-center gap-1">
-              <Stars value={product.ratingAvg || 5} size="xs" />
-              <span className="text-[9px] sm:text-[10px] font-bold text-text-muted">
-                ({product.ratingCount || 0})
-              </span>
+          {/* Rating & Guarantee Row (Only shown on non-home pages) */}
+          {(shouldShowRating || shouldShowGuarantee) && (
+            <div className="flex items-center justify-between gap-1 flex-wrap pt-0.5">
+              {shouldShowRating && (
+                <div className="flex items-center gap-1">
+                  <Stars value={product.ratingAvg || 5} size="xs" />
+                  <span className="text-[9px] sm:text-[10px] font-bold text-text-muted">
+                    ({product.ratingCount || 0})
+                  </span>
+                </div>
+              )}
+              {shouldShowGuarantee && (
+                <span className="inline-flex items-center gap-0.5 text-[8.5px] sm:text-[9px] font-bold text-emerald-800 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200/60">
+                  <ShieldCheck className="h-2.5 w-2.5 text-emerald-600" />
+                  <span>Guaranteed</span>
+                </span>
+              )}
             </div>
-            <span className="inline-flex items-center gap-0.5 text-[8.5px] sm:text-[9px] font-bold text-emerald-800 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200/60">
-              <ShieldCheck className="h-2.5 w-2.5 text-emerald-600" />
-              <span>Guaranteed</span>
-            </span>
-          </div>
+          )}
         </div>
 
-        {/* Price Block */}
+        {/* Price Block (No duplicate discount badge on bottom when top badge is shown or on home page) */}
         <div className="mt-auto pt-1.5 sm:pt-2 flex items-center justify-between gap-1 border-t border-border/60">
-          <Price price={product.price} mrp={product.mrp} />
+          <Price price={product.price} mrp={product.mrp} showBadge={!isHome && discountPercent === 0} />
 
           {/* Mobile Tap-Friendly Add Button */}
           {!isOutOfStock && (
