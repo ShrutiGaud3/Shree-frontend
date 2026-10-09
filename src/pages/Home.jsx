@@ -91,24 +91,24 @@ const Home = () => {
               </p>
 
               {/* CTAs */}
-              <div className="pt-1 sm:pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-4 w-full sm:w-auto max-w-xs sm:max-w-none">
-                <Link to="/products?category=jewellery" className="block w-full sm:w-auto">
+              <div className="pt-1 sm:pt-2 flex flex-row items-center gap-2 sm:gap-4 w-full sm:w-auto max-w-sm sm:max-w-none">
+                <Link to="/products?category=jewellery" className="flex-1 sm:flex-initial">
                   <button
                     type="button"
-                    className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full bg-[#C4976A] hover:bg-[#B38558] text-white px-6 sm:px-8 py-2.5 sm:py-3.5 text-xs sm:text-sm font-bold uppercase tracking-wider sm:tracking-widest shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer"
+                    className="inline-flex w-full sm:w-auto items-center justify-center gap-1.5 sm:gap-2 rounded-full bg-[#C4976A] hover:bg-[#B38558] text-white px-3.5 sm:px-8 py-2.5 sm:py-3.5 text-[11px] sm:text-sm font-bold uppercase tracking-wider sm:tracking-widest shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer"
                   >
                     <span>Shop Jewellery</span>
-                    <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4 stroke-[2]" />
+                    <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4 stroke-[2]" />
                   </button>
                 </Link>
 
-                <Link to="/products?category=toys" className="block w-full sm:w-auto">
+                <Link to="/products?category=toys" className="flex-1 sm:flex-initial">
                   <button
                     type="button"
-                    className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full bg-[#E67E22] hover:bg-[#D35400] text-white px-6 sm:px-8 py-2.5 sm:py-3.5 text-xs sm:text-sm font-bold uppercase tracking-wider sm:tracking-widest shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer"
+                    className="inline-flex w-full sm:w-auto items-center justify-center gap-1.5 sm:gap-2 rounded-full bg-[#E67E22] hover:bg-[#D35400] text-white px-3.5 sm:px-8 py-2.5 sm:py-3.5 text-[11px] sm:text-sm font-bold uppercase tracking-wider sm:tracking-widest shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer"
                   >
                     <span>Shop Toys</span>
-                    <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4 stroke-[2]" />
+                    <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4 stroke-[2]" />
                   </button>
                 </Link>
               </div>
@@ -164,9 +164,14 @@ const Home = () => {
         </div>
 
         {state === "loading" && (
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+          <div
+            className="flex overflow-x-auto gap-3 pb-3 -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-3 lg:grid-cols-4 sm:gap-4 sm:pb-0 snap-x snap-mandatory scrollbar-none"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          >
             {[1, 2, 3, 4].map((n) => (
-              <ProductSkeleton key={n} />
+              <div key={n} className="w-[160px] xs:w-[175px] sm:w-auto flex-shrink-0 snap-start">
+                <ProductSkeleton />
+              </div>
             ))}
           </div>
         )}
@@ -176,9 +181,14 @@ const Home = () => {
         )}
 
         {state === "done" && (
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+          <div
+            className="flex overflow-x-auto gap-3 pb-3 -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-3 lg:grid-cols-4 sm:gap-4 sm:pb-0 snap-x snap-mandatory scrollbar-none"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          >
             {featured.map((p) => (
-              <ProductCard key={p._id} product={p} />
+              <div key={p._id} className="w-[160px] xs:w-[175px] sm:w-auto flex-shrink-0 snap-start">
+                <ProductCard product={p} />
+              </div>
             ))}
           </div>
         )}
@@ -206,17 +216,27 @@ const Home = () => {
         </div>
 
         {state === "loading" && (
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+          <div
+            className="flex overflow-x-auto gap-3 pb-3 -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-3 lg:grid-cols-4 sm:gap-4 sm:pb-0 snap-x snap-mandatory scrollbar-none"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          >
             {[1, 2, 3, 4].map((n) => (
-              <ProductSkeleton key={n} />
+              <div key={n} className="w-[160px] xs:w-[175px] sm:w-auto flex-shrink-0 snap-start">
+                <ProductSkeleton />
+              </div>
             ))}
           </div>
         )}
 
         {state === "done" && jewellery.length > 0 && (
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+          <div
+            className="flex overflow-x-auto gap-3 pb-3 -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-3 lg:grid-cols-4 sm:gap-4 sm:pb-0 snap-x snap-mandatory scrollbar-none"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          >
             {jewellery.map((p) => (
-              <ProductCard key={p._id} product={p} />
+              <div key={p._id} className="w-[160px] xs:w-[175px] sm:w-auto flex-shrink-0 snap-start">
+                <ProductCard product={p} />
+              </div>
             ))}
           </div>
         )}
@@ -342,17 +362,27 @@ const Home = () => {
         </div>
 
         {state === "loading" && (
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+          <div
+            className="flex overflow-x-auto gap-3 pb-3 -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-3 lg:grid-cols-4 sm:gap-4 sm:pb-0 snap-x snap-mandatory scrollbar-none"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          >
             {[1, 2, 3, 4].map((n) => (
-              <ProductSkeleton key={n} />
+              <div key={n} className="w-[160px] xs:w-[175px] sm:w-auto flex-shrink-0 snap-start">
+                <ProductSkeleton />
+              </div>
             ))}
           </div>
         )}
 
         {state === "done" && toys.length > 0 && (
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+          <div
+            className="flex overflow-x-auto gap-3 pb-3 -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-3 lg:grid-cols-4 sm:gap-4 sm:pb-0 snap-x snap-mandatory scrollbar-none"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          >
             {toys.map((p) => (
-              <ProductCard key={p._id} product={p} />
+              <div key={p._id} className="w-[160px] xs:w-[175px] sm:w-auto flex-shrink-0 snap-start">
+                <ProductCard product={p} />
+              </div>
             ))}
           </div>
         )}

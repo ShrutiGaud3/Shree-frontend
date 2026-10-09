@@ -38,6 +38,7 @@ const emptyForm = {
   stock: "10",
   gstRate: "18",
   isReturnable: true,
+  guarantee: "100% Quality & Authenticity Guarantee with 7-Day Easy Support",
   ageGroup: "",
   batteryRequired: false,
   material: "",
@@ -130,6 +131,7 @@ const ProductsAdmin = () => {
       stock: p.stock ?? "10",
       gstRate: p.gstRate ?? "18",
       isReturnable: p.isReturnable ?? true,
+      guarantee: p.guarantee || "100% Quality & Authenticity Guarantee with 7-Day Easy Support",
       ageGroup: p.toysFields?.ageGroup || "",
       batteryRequired: !!p.toysFields?.batteryRequired,
       material: p.jewelleryFields?.material || "",
@@ -298,6 +300,13 @@ const ProductsAdmin = () => {
             value={form.colour}
             onChange={(e) => setForm({ ...form, colour: e.target.value })}
             placeholder="e.g. red, gold, multi"
+          />
+
+          <Input
+            label="Product Guarantee (Optional)"
+            value={form.guarantee}
+            onChange={(e) => setForm({ ...form, guarantee: e.target.value })}
+            placeholder="100% Quality & Authenticity Guarantee with 7-Day Easy Support"
           />
 
           <div>

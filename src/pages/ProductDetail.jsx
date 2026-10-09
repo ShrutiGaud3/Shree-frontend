@@ -415,6 +415,53 @@ const ProductDetail = () => {
             </div>
           </div>
 
+          {/* Official Product Guarantee Card */}
+          <div className="rounded-2xl bg-gradient-to-br from-emerald-50/80 via-white to-amber-50/40 p-4 sm:p-4.5 border-2 border-emerald-200/80 shadow-xs space-y-3">
+            <div className="flex items-center gap-2.5">
+              <div className="flex h-8.5 w-8.5 flex-shrink-0 items-center justify-center rounded-xl bg-emerald-600 text-white shadow-xs">
+                <ShieldCheck className="h-5 w-5" />
+              </div>
+              <div>
+                <h3 className="font-serif font-black text-xs sm:text-sm text-text">
+                  Shree 100% Quality & Authenticity Guarantee
+                </h3>
+                <p className="text-[10px] sm:text-[11px] font-bold text-emerald-800">
+                  Verified Genuine · Safe Delivery · Guaranteed Satisfaction
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-0.5 text-xs text-text-muted">
+              <div className="flex items-start gap-2 rounded-xl bg-white/90 p-2.5 border border-emerald-100/80">
+                <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600 flex-shrink-0 mt-0.5" />
+                <div>
+                  <span className="font-bold text-text text-[11px] block">100% Certified Quality</span>
+                  <span className="text-[10px] leading-tight text-text-muted">
+                    {product.category === "jewellery"
+                      ? "Skin-safe hypoallergenic finish & hallmarked quality."
+                      : "Non-toxic child-safe & BIS safety compliant."}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-2 rounded-xl bg-white/90 p-2.5 border border-emerald-100/80">
+                <RotateCcw className="h-3.5 w-3.5 text-emerald-600 flex-shrink-0 mt-0.5" />
+                <div>
+                  <span className="font-bold text-text text-[11px] block">Damage Protection</span>
+                  <span className="text-[10px] leading-tight text-text-muted">
+                    Full replacement guarantee against any transit damages.
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {product.guarantee && (
+              <p className="text-[11px] font-semibold text-emerald-950 bg-emerald-100/70 rounded-lg px-2.5 py-1.5 border border-emerald-200">
+                🛡️ <b>Guarantee:</b> {product.guarantee}
+              </p>
+            )}
+          </div>
+
           {/* Delivery pincode check (real API: GET /api/shipping/check/:pincode) */}
           <div className="rounded-2xl bg-surface/60 p-4 border border-accent/25 space-y-3">
             <div className="flex items-center gap-2">
@@ -464,6 +511,7 @@ const ProductDetail = () => {
         <Tabs
           tabs={[
             { id: "specs", label: "Specifications" },
+            { id: "guarantee", label: "Guarantee & Warranty" },
             { id: "shipping", label: "Shipping & Returns" },
             { id: "care", label: "Care Instructions" },
           ]}
@@ -531,6 +579,62 @@ const ProductDetail = () => {
                 </dl>
               ) : (
                 <p className="text-sm text-text-muted">Standard product specifications apply.</p>
+              )}
+            </div>
+          )}
+
+          {activeTab === "guarantee" && (
+            <div className="space-y-4 text-sm text-text/90 leading-relaxed">
+              <div className="flex items-center gap-2 text-emerald-800">
+                <ShieldCheck className="h-5 w-5 text-emerald-600" />
+                <h3 className="font-serif font-bold text-lg text-text">
+                  Shree 100% Quality & Authenticity Guarantee
+                </h3>
+              </div>
+              <p className="text-xs sm:text-sm text-text-muted leading-relaxed">
+                At Shree, every single item goes through rigorous multi-level quality inspections before being hand-packed and dispatched. We stand 100% behind the authenticity and quality of our collections.
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+                <div className="rounded-2xl bg-surface/70 p-4 border border-accent/25 space-y-1.5">
+                  <div className="flex items-center gap-2 text-emerald-800 font-bold text-xs">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-600 flex-shrink-0" />
+                    <span>Material Assurance</span>
+                  </div>
+                  <p className="text-xs text-text-muted">
+                    {product.category === "jewellery"
+                      ? "Certified skin-safe hypoallergenic metals with long-lasting premium polish."
+                      : "BPA-free non-toxic child-safe plastic and natural wood materials."}
+                  </p>
+                </div>
+
+                <div className="rounded-2xl bg-surface/70 p-4 border border-accent/25 space-y-1.5">
+                  <div className="flex items-center gap-2 text-emerald-800 font-bold text-xs">
+                    <RotateCcw className="h-4 w-4 text-emerald-600 flex-shrink-0" />
+                    <span>Transit Protection</span>
+                  </div>
+                  <p className="text-xs text-text-muted">
+                    Instant 100% replacement guarantee if your parcel arrives damaged during courier transit.
+                  </p>
+                </div>
+
+                <div className="rounded-2xl bg-surface/70 p-4 border border-accent/25 space-y-1.5">
+                  <div className="flex items-center gap-2 text-emerald-800 font-bold text-xs">
+                    <ShieldCheck className="h-4 w-4 text-emerald-600 flex-shrink-0" />
+                    <span>Quality Tested</span>
+                  </div>
+                  <p className="text-xs text-text-muted">
+                    {product.category === "jewellery"
+                      ? "Checked for hallmark clarity, stone setting firmness and clasp strength."
+                      : "BIS safety certified for smooth edges and durability under playful handling."}
+                  </p>
+                </div>
+              </div>
+
+              {product.guarantee && (
+                <div className="rounded-xl bg-emerald-50 p-3 border border-emerald-200 text-xs text-emerald-900 font-semibold">
+                  🛡️ <b>Specific Product Guarantee:</b> {product.guarantee}
+                </div>
               )}
             </div>
           )}

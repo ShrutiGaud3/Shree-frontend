@@ -3,6 +3,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import Layout from "./components/Layout.jsx";
+import ScrollToTop from "./components/ScrollToTop.jsx";
 import { Protected, AdminOnly } from "./components/Guards.jsx";
 import Home from "./pages/Home.jsx";
 import Products from "./pages/Products.jsx";
@@ -38,6 +39,7 @@ import UsersAdmin from "./pages/admin/Users.jsx";
 const App = () => (
   <AuthProvider>
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />

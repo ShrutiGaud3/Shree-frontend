@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { ShoppingBag, Star, Sparkles, Check, ArrowRight, Heart } from "lucide-react";
+import { ShoppingBag, Star, Sparkles, Check, ArrowRight, Heart, ShieldCheck } from "lucide-react";
 import { Price, Stars } from "./ui.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
 import api, { apiError } from "../api/client.js";
@@ -194,11 +194,17 @@ const ProductCard = ({ product, onAddedToCart }) => {
           {product.name}
         </Link>
 
-        {/* Rating Row */}
-        <div className="flex items-center gap-1">
-          <Stars value={product.ratingAvg || 5} size="xs" />
-          <span className="text-[9px] sm:text-[10px] font-bold text-text-muted">
-            ({product.ratingCount || 0})
+        {/* Rating & Guarantee Row */}
+        <div className="flex items-center justify-between gap-1 flex-wrap">
+          <div className="flex items-center gap-1">
+            <Stars value={product.ratingAvg || 5} size="xs" />
+            <span className="text-[9px] sm:text-[10px] font-bold text-text-muted">
+              ({product.ratingCount || 0})
+            </span>
+          </div>
+          <span className="inline-flex items-center gap-0.5 text-[8.5px] sm:text-[9px] font-bold text-emerald-800 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200/60">
+            <ShieldCheck className="h-2.5 w-2.5 text-emerald-600" />
+            <span>Guaranteed</span>
           </span>
         </div>
 
