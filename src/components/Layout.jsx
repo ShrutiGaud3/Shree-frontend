@@ -13,6 +13,8 @@ import {
   Menu,
   X,
   ChevronDown,
+  ChevronRight,
+  Package,
   Sparkles,
   Home,
   Grid,
@@ -378,116 +380,322 @@ const Header = ({ cartCount, wishlistCount, onOpenMobileMenu, onOpenCart }) => {
   );
 };
 
-// Slide-in Mobile Drawer
-const MobileDrawer = ({ isOpen, onClose, cartCount }) => {
+// Ultra-Premium Slide-in Mobile Drawer
+const MobileDrawer = ({ isOpen, onClose, cartCount, wishlistCount = 0 }) => {
   const { user, isLoggedIn, isAdmin, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const [jewelleryOpen, setJewelleryOpen] = useState(false);
+  const [toysOpen, setToysOpen] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 md:hidden bg-text/40 backdrop-blur-xs animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 md:hidden bg-black/50 backdrop-blur-sm animate-in fade-in duration-200">
       <div className="fixed inset-0" onClick={onClose} aria-hidden="true" />
-      <div className="fixed inset-y-0 left-0 w-4/5 max-w-xs bg-white shadow-2xl p-5 flex flex-col justify-between overflow-y-auto border-r border-border animate-in slide-in-from-left duration-200">
-        <div>
-          <div className="flex items-center justify-between pb-4 border-b border-border">
-            <Link to="/" onClick={onClose} className="flex items-center gap-2">
+      <div className="fixed inset-y-0 left-0 w-[85%] max-w-[320px] bg-white shadow-2xl flex flex-col justify-between overflow-y-auto border-r border-border animate-in slide-in-from-left duration-300">
+        <div className="p-4 sm:p-5 space-y-4">
+          {/* Drawer Header */}
+          <div className="flex items-center justify-between pb-3.5 border-b border-border/80">
+            <Link to="/" onClick={onClose} className="flex items-center gap-2 group">
               <img
                 src="/logo.png"
                 alt="Shree 14"
-                className="h-9 sm:h-10 w-auto object-contain"
+                className="h-9 w-auto object-contain transition-transform group-hover:scale-105"
               />
             </Link>
             <button
               onClick={onClose}
-              className="rounded-full p-1.5 text-text-muted hover:bg-surface hover:text-text"
+              className="flex h-8 w-8 items-center justify-center rounded-full bg-surface hover:bg-primary-soft text-text transition-colors cursor-pointer"
               aria-label="Close menu"
             >
-              <X className="h-5 w-5" />
+              <X className="h-4.5 w-4.5" />
             </button>
           </div>
 
-          {/* User Welcome Card if logged in */}
-          {isLoggedIn && (
-            <div className="mt-3 p-3 rounded-2xl bg-primary-soft/60 border border-accent/20 flex items-center gap-3">
-              <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-primary text-text font-black text-sm shadow-2xs border border-white">
-                {user?.name ? user.name.charAt(0).toUpperCase() : <User className="h-4 w-4" />}
+          {/* User Profile / Join Banner */}
+          {isLoggedIn ? (
+            <div className="p-3.5 rounded-2xl bg-gradient-to-br from-primary-soft/80 via-white to-[#FBE7D0]/40 border border-accent/25 shadow-2xs">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-primary text-text font-serif font-black text-base shadow-xs border-2 border-white">
+                  {user?.name ? user.name.charAt(0).toUpperCase() : <User className="h-5 w-5" />}
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-accent">
+                      {isAdmin ? "Store Admin" : "Member"}
+                    </span>
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                  </div>
+                  <p className="font-serif font-bold text-sm text-text truncate">
+                    {user?.name || "Valued Customer"}
+                  </p>
+                  <p className="text-[10px] text-text-muted truncate">{user?.email}</p>
+                </div>
               </div>
-              <div className="min-w-0 flex-1">
-                <span className="block text-[10px] font-bold uppercase tracking-wider text-text-muted">
-                  Welcome,
-                </span>
-                <span className="block text-xs font-black text-text truncate">
-                  {user?.name || "Customer"}
-                </span>
+            </div>
+          ) : (
+            <div className="p-3.5 rounded-2xl bg-gradient-to-br from-[#FFFBF5] via-[#FFF5F8] to-[#FFF0F5] border border-accent/30 shadow-2xs space-y-2.5">
+              <div className="flex items-center gap-2">
+                <Sparkles className="h-4 w-4 text-accent" />
+                <span className="font-serif font-bold text-xs text-text">Welcome to Shree 14</span>
+              </div>
+              <p className="text-[11px] text-text-muted leading-snug">
+                Sign in to track orders, save wishlists & enjoy members-only offers.
+              </p>
+              <div className="flex items-center gap-2 pt-0.5">
+                <Link
+                  to="/login"
+                  onClick={onClose}
+                  className="flex-1 rounded-xl bg-primary hover:bg-primary-hover py-2 text-center text-xs font-bold text-text shadow-2xs transition"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  to="/register"
+                  onClick={onClose}
+                  className="flex-1 rounded-xl bg-white hover:bg-surface border border-accent/40 py-2 text-center text-xs font-bold text-text transition"
+                >
+                  Register
+                </Link>
               </div>
             </div>
           )}
 
-          <div className="my-3 space-y-1 text-sm font-semibold text-text">
-            <Link to="/" onClick={onClose} className="block py-2 px-3 rounded-xl hover:bg-surface">
-              Home
-            </Link>
-            <Link to="/products" onClick={onClose} className="block py-2 px-3 rounded-xl hover:bg-surface">
-              All Products
-            </Link>
+          {/* Navigation Links */}
+          <nav className="space-y-1 text-xs font-bold text-text">
+            {/* Home */}
             <Link
-              to="/products?category=jewellery"
+              to="/"
               onClick={onClose}
-              className="block py-2 px-3 rounded-xl hover:bg-primary-tint text-text"
+              className={`flex items-center justify-between px-3 py-2.5 rounded-xl transition ${
+                location.pathname === "/" ? "bg-primary-soft text-primary-hover font-black" : "hover:bg-surface"
+              }`}
             >
-              💎 Jewellery Collection
+              <div className="flex items-center gap-2.5">
+                <Home className="h-4 w-4 text-accent" />
+                <span>Home</span>
+              </div>
+              <ChevronRight className="h-3.5 w-3.5 text-text-muted/60" />
             </Link>
+
+            {/* Shop All */}
             <Link
-              to="/products?category=toys"
+              to="/products"
               onClick={onClose}
-              className="block py-2 px-3 rounded-xl hover:bg-sand-tint text-text"
+              className={`flex items-center justify-between px-3 py-2.5 rounded-xl transition ${
+                location.pathname === "/products" && !location.search ? "bg-primary-soft text-primary-hover font-black" : "hover:bg-surface"
+              }`}
             >
-              🧸 Toys Collection
+              <div className="flex items-center gap-2.5">
+                <ShoppingBag className="h-4 w-4 text-accent" />
+                <span>All Collections</span>
+              </div>
+              <ChevronRight className="h-3.5 w-3.5 text-text-muted/60" />
             </Link>
-            <Link to="/orders" onClick={onClose} className="block py-2 px-3 rounded-xl hover:bg-surface">
-              My Orders
+
+            {/* Jewellery with Accordion */}
+            <div className="rounded-xl overflow-hidden bg-primary-tint/40 border border-primary/20">
+              <div
+                onClick={() => setJewelleryOpen(!jewelleryOpen)}
+                className="flex items-center justify-between px-3 py-2.5 hover:bg-primary-soft/50 transition cursor-pointer"
+              >
+                <Link
+                  to="/products?category=jewellery"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onClose();
+                  }}
+                  className="flex items-center gap-2.5 text-primary-hover font-black"
+                >
+                  <Gem className="h-4 w-4 text-primary-hover" />
+                  <span>Jewellery</span>
+                </Link>
+                <ChevronDown
+                  className={`h-3.5 w-3.5 text-text-muted transition-transform duration-200 ${
+                    jewelleryOpen ? "rotate-180" : ""
+                  }`}
+                />
+              </div>
+
+              {jewelleryOpen && (
+                <div className="px-3 pb-2.5 pt-0.5 space-y-1 border-t border-primary/15 bg-white/70">
+                  {Object.entries(CATEGORIES.jewellery.subCategories).map(([k, label]) => (
+                    <Link
+                      key={k}
+                      to={`/products?category=jewellery&subCategory=${k}`}
+                      onClick={onClose}
+                      className="flex items-center justify-between px-2.5 py-1.5 rounded-lg text-[11px] font-semibold text-text hover:bg-primary-soft transition"
+                    >
+                      <span>{label}</span>
+                      <span className="text-[10px] text-text-muted">Explore →</span>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Toys with Accordion */}
+            <div className="rounded-xl overflow-hidden bg-sand-tint/50 border border-accent/25">
+              <div
+                onClick={() => setToysOpen(!toysOpen)}
+                className="flex items-center justify-between px-3 py-2.5 hover:bg-sand-tint transition cursor-pointer"
+              >
+                <Link
+                  to="/products?category=toys"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onClose();
+                  }}
+                  className="flex items-center gap-2.5 text-[#B36B15] font-black"
+                >
+                  <Gift className="h-4 w-4 text-[#B36B15]" />
+                  <span>Toys & Games</span>
+                </Link>
+                <ChevronDown
+                  className={`h-3.5 w-3.5 text-text-muted transition-transform duration-200 ${
+                    toysOpen ? "rotate-180" : ""
+                  }`}
+                />
+              </div>
+
+              {toysOpen && (
+                <div className="px-3 pb-2.5 pt-0.5 space-y-1 border-t border-accent/15 bg-white/70">
+                  {Object.entries(CATEGORIES.toys.subCategories).map(([k, label]) => (
+                    <Link
+                      key={k}
+                      to={`/products?category=toys&subCategory=${k}`}
+                      onClick={onClose}
+                      className="flex items-center justify-between px-2.5 py-1.5 rounded-lg text-[11px] font-semibold text-text hover:bg-sand-tint transition"
+                    >
+                      <span>{label}</span>
+                      <span className="text-[10px] text-text-muted">Explore →</span>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Wishlist */}
+            <Link
+              to="/wishlist"
+              onClick={onClose}
+              className="flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-surface transition"
+            >
+              <div className="flex items-center gap-2.5">
+                <Heart className="h-4 w-4 text-accent" />
+                <span>My Wishlist</span>
+              </div>
+              {wishlistCount > 0 ? (
+                <span className="rounded-full bg-primary px-2 py-0.5 text-[10px] font-black text-text">
+                  {wishlistCount}
+                </span>
+              ) : (
+                <ChevronRight className="h-3.5 w-3.5 text-text-muted/60" />
+              )}
             </Link>
-            <Link to="/account" onClick={onClose} className="block py-2 px-3 rounded-xl hover:bg-surface">
-              My Account
+
+            {/* My Orders */}
+            <Link
+              to="/orders"
+              onClick={onClose}
+              className="flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-surface transition"
+            >
+              <div className="flex items-center gap-2.5">
+                <Package className="h-4 w-4 text-accent" />
+                <span>My Orders</span>
+              </div>
+              <ChevronRight className="h-3.5 w-3.5 text-text-muted/60" />
             </Link>
+
+            {/* My Account */}
+            <Link
+              to="/account"
+              onClick={onClose}
+              className="flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-surface transition"
+            >
+              <div className="flex items-center gap-2.5">
+                <User className="h-4 w-4 text-accent" />
+                <span>My Account</span>
+              </div>
+              <ChevronRight className="h-3.5 w-3.5 text-text-muted/60" />
+            </Link>
+
+            {/* Admin Portal if Admin */}
             {isAdmin && (
-              <Link to="/admin" onClick={onClose} className="block py-2 px-3 rounded-xl bg-primary font-bold">
-                🛡️ Admin Portal
+              <Link
+                to="/admin"
+                onClick={onClose}
+                className="flex items-center justify-between px-3 py-2.5 rounded-xl bg-primary-soft text-text font-black border border-accent/30 hover:bg-primary transition"
+              >
+                <div className="flex items-center gap-2.5">
+                  <ShieldCheck className="h-4 w-4 text-accent" />
+                  <span>Admin Portal</span>
+                </div>
+                <ChevronRight className="h-3.5 w-3.5" />
               </Link>
             )}
-          </div>
+
+            {/* Support / Help section */}
+            <div className="pt-2 border-t border-border/80 space-y-1">
+              <p className="px-3 text-[9px] font-bold uppercase tracking-widest text-text-muted/80">
+                Help & Info
+              </p>
+              <Link
+                to="/about"
+                onClick={onClose}
+                className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-text-muted hover:text-text hover:bg-surface transition"
+              >
+                <span>About Us</span>
+              </Link>
+              <Link
+                to="/contact"
+                onClick={onClose}
+                className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-text-muted hover:text-text hover:bg-surface transition"
+              >
+                <span>Contact & Support</span>
+              </Link>
+              <Link
+                to="/faq"
+                onClick={onClose}
+                className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-text-muted hover:text-text hover:bg-surface transition"
+              >
+                <span>FAQs</span>
+              </Link>
+            </div>
+          </nav>
         </div>
 
-        <div className="pt-4 border-t border-border">
-          {isLoggedIn ? (
+        {/* Drawer Footer (Sign out & Trust guarantee note) */}
+        <div className="p-4 border-t border-border/80 bg-surface/40 space-y-3">
+          <div className="flex items-center gap-2 text-[10px] font-bold text-text-muted">
+            <ShieldCheck className="h-3.5 w-3.5 text-emerald-600 flex-shrink-0" />
+            <span>100% Genuine Quality Guaranteed</span>
+          </div>
+
+          {isLoggedIn && (
             <button
               onClick={() => {
                 logout();
                 onClose();
                 navigate("/");
               }}
-              className="flex w-full items-center justify-center gap-2 rounded-2xl bg-red-50 py-2.5 text-xs font-bold text-red-700"
+              className="flex w-full items-center justify-center gap-2 rounded-xl bg-red-50 hover:bg-red-100 py-2.5 text-xs font-bold text-red-700 transition cursor-pointer"
             >
-              <LogOut className="h-4 w-4" /> Sign Out
+              <LogOut className="h-3.5 w-3.5" />
+              <span>Sign Out</span>
             </button>
-          ) : (
-            <div className="flex gap-2">
-              <Link
-                to="/login"
-                onClick={onClose}
-                className="flex-1 rounded-xl bg-primary py-2 text-center text-xs font-bold text-text shadow-xs"
-              >
-                Sign In
-              </Link>
-              <Link
-                to="/register"
-                onClick={onClose}
-                className="flex-1 rounded-xl border border-border bg-white py-2 text-center text-xs font-bold text-text"
-              >
-                Join
-              </Link>
-            </div>
           )}
         </div>
       </div>
@@ -703,7 +911,8 @@ const Layout = () => {
       <MobileDrawer
         isOpen={mobileMenuOpen}
         onClose={() => setMobileMenuOpen(false)}
-        cartCount={cartCount}
+        cartCount={isLoggedIn ? cartCount : 0}
+        wishlistCount={isLoggedIn ? wishlistCount : 0}
       />
 
       <main className="mx-auto w-full max-w-7xl flex-1 px-3.5 sm:px-6 lg:px-8 py-6 sm:py-8 pb-16 md:pb-6 min-w-0">
